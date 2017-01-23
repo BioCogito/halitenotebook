@@ -67,7 +67,7 @@ class Replay(object):
         return gm
 
 
-def show_map(board, values=None):
+def show_map(board, values=None, as_arrows=False):
     html = []
     html.append("""
     <style>
@@ -83,6 +83,8 @@ def show_map(board, values=None):
     owner = board["owner"]
     production = board["production"]
 
+    arrow_mapping = dict(zip(range(5),["","↑","→","↓","←"]))
+
     for y in range(0, board.height):
         html.append("<tr>")
         for x in range(0, width):
@@ -95,6 +97,8 @@ def show_map(board, values=None):
             if values is not None:
                 if i in values.index:
                     value = values[i]
+                    if as_arrows:
+                        value = arrow_mapping.get(value, value)
                 else:
                     value = ''
             else:
